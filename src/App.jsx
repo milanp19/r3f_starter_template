@@ -1,18 +1,24 @@
 import { useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Canvas, useLoader } from "@react-three/fiber";
+import {
+  OrbitControls,
+  PerspectiveCamera,
+  useTexture,
+} from "@react-three/drei";
+// import { GLTFLoader } from "three/src/loaders/GLTFLoader";
+import { BackSide, DoubleSide, TextureLoader } from "three";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const texture = useLoader(TextureLoader, "room.jpg");
   return (
     <>
       <Canvas>
-        <mesh>
-          <boxGeometry />
-          <meshNormalMaterial />
+        <mesh rotation-y={89.9}>
+          <sphereGeometry args={[500, 60, 40]} />
+          <meshBasicMaterial map={texture} side={BackSide} />
         </mesh>
-        <OrbitControls />
+
+        <OrbitControls dampingFactor={1} />
       </Canvas>
     </>
   );
